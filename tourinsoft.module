@@ -1,0 +1,82 @@
+<?php
+/**
+ * Implements hook_menu().
+ */
+function tourinsoft_menu() {
+	$items = array();
+	
+	$items['admin/config/services/tourinsoft'] = array(
+			'title' => t('Tourinsoft'),
+			'description' => 'Tourinsoft Webservice synchronization',
+			'page callback' => 'tourinsoft_get_files',
+			'access arguments' => array('administer tourinsoft'),
+			'file' => 'tourinsoft.admin.inc',
+			'type' => MENU_NORMAL_ITEM,
+	);
+	$items['admin/config/services/tourinsoft/json-files'] = array(
+			'title' => t('JSON files'),
+			'type' => MENU_DEFAULT_LOCAL_TASK,
+			'weight' => -10,
+	);
+	$items['admin/config/services/tourinsoft/manual-update'] = array(
+			'title' => t('Manual updates'),
+			'description' => 'Manual updates',
+			'page callback' => 'tourinsoft_manual_update',
+			'access arguments' => array('administer tourinsoft'),
+			'file' => 'tourinsoft.admin.inc',
+			'type' => MENU_LOCAL_TASK,
+			'weight' => 10,
+	);
+	$items['admin/config/services/tourinsoft/configure'] = array(
+			'title' => t('Settings'),
+			'description' => 'Tourinsoft synchronization settings',
+			'page callback' => 'drupal_get_form',
+			'page arguments' => array('tourinsoft_admin_settings'),
+			'access arguments' => array('administer tourinsoft'),
+			'file' => 'tourinsoft.admin.inc',
+			'type' => MENU_LOCAL_TASK,
+			'weight' => 20,
+	);
+	
+	$items['admin/config/services/tourinsoft/download'] = array(
+			'title' => 'XML download',
+			'page callback' =>'tourinsoft_download',
+			'page arguments' => array(5,6),
+			'access arguments' => array('administer tourinsoft'),
+			'type' => MENU_CALLBACK,
+			'file' => 'tourinsoft.admin.inc',
+	);
+	
+	return $items;
+}
+
+/**
+ * Return OBJETTOUR_CODEs for syndicated sheets only.
+ */
+function tourinsoft_get_syndicated_sheets() {
+	$all_sheets = array(
+		'ts_asc' => array('ASC', 'Activités sportives et culturelles'),
+		'ts_com' => array('COM', 'Commerces'),
+		'ts_deg' => array('DEG', 'Dégustations'),
+		'ts_fma' => array('FMA', 'Fêtes et manifestations'),
+		'ts_hlo' => array('HLO', 'Hébergements locatifs'),
+		'ts_hot' => array('HOT', 'Hôtellerie'),
+		'ts_hpa' => array('HPA', 'Hôtellerie de plein air'),
+		'ts_iti' => array('ITI', 'Itinéraires touristiques'),
+		'ts_loi' => array('LOI', 'Loisirs'),
+		'ts_org' => array('ORG', 'Organismes de tourisme'),
+		'ts_pcu' => array('PCU', 'Patrimoine culturel'),
+		'ts_pna' => array('PNA', 'Patrimoine naturel'),
+		'ts_res' => array('RES', 'Restaurants'),
+		'ts_vil' => array('VIL', 'Villages de vacances'),
+	);
+
+	$syndicated_sheets = array();
+	foreach ($all_sheets as $ts_variable=>$sheet) {
+		if (($syndic_id = variable_get($ts_variable, 0)) != '0') {
+			$syndicated_sheets[$syndic_id] = $sheet;
+		}
+	}
+	
+	return $syndicated_sheets;
+}

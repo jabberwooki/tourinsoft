@@ -1,0 +1,14 @@
+name = Tourinsoft Syndication
+description = "Allows integration of tourism data from the Tourinsoft regional database."
+package = Tourinsoft
+core = 7.x
+version = 7.x-0.1
+dependencies[] = migrate
+
+# Files containing Migrate classes
+files[] = tourinsoft.migrate.inc
+files[] = ts_base.inc
+files[] = ts_hot.inc
+files[] = ts_res.inc
+
+

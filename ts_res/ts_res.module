@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the RES feature.
+ */
+
+include_once 'ts_res.features.inc';

@@ -1,0 +1,16 @@
+name = Tourinsoft common
+description = Drupal base fields shared by all Tourinsoft nodes.
+core = 7.x
+package = Tourinsoft
+version = 7.x-0.1
+project = ts_common
+dependencies[] = features
+dependencies[] = image
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_ts_descriptioncourte
+features[field_base][] = field_ts_descriptionlongue
+features[field_base][] = field_ts_photos
+features[field_base][] = field_ts_published
+features[field_base][] = field_ts_syndicobjectid
+features[field_base][] = field_ts_updated
